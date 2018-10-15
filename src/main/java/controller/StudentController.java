@@ -120,7 +120,7 @@ public class StudentController {
 	@RequestMapping("removeStudent.do")
 	public String removeStudent(Student student) {
 		stu.removeStudent(student);
-		//int i = 0;
+		int i = 0;
 		return "student";
 	}
 	//修改密码
