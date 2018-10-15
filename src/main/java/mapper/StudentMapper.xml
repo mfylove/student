@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StudentMapper">
+	<resultMap id="BaseResultMap" type="model.Student">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="sname" jdbcType="VARCHAR" property="sname" />
+		<result column="sage" jdbcType="INTEGER" property="sage" />
+		<result column="ssex" jdbcType="VARCHAR" property="ssex" />
+		<result column="birthday" jdbcType="DATE" property="birthday" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+	</resultMap>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id,sname,sage,ssex,birthday,address from student
+  	</select>
+	<select id="selectlike" resultType="INTEGER">
+		select COUNT(id) from student WHERE sname LIKE '%${search}%'
+	</select>
+	<select id="selectlimit" resultMap="BaseResultMap">
+		select id,sname,sage,ssex,birthday,address from student WHERE sname LIKE '%${search}%' order by id
+		<choose>
+			<when test="order=='desc'">
+				desc
+			</when>
+			<when test="order=='asc'">
+				asc
+			</when>
+		</choose>
+		limit ${offset},${pageCount}
+  	</select>
+	<insert id="insertStudent" parameterType="model.Student">
+  		insert into student (sname,sage,ssex,birthday,address) values (#{sname},#{sage},#{ssex},#{birthday},#{address})
+  	</insert>
+	<update id="updateStudent" parameterType="model.Student">
+		update student
+		<set>
+
+			<if test="sname != null and sname !=''">
+				sname=#{sname},
+			</if>
+			<if test="sage != null and sage !=''">
+				sage=#{sage},
+			</if>
+			<if test="ssex != null and ssex !=''">
+				ssex=#{ssex},
+			</if>
+			<if test="birthday != null and birthday !=''">
+				birthday=#{birthday},
+			</if>
+			<if test="address != null and address !=''">
+				address=#{address},
+			</if>
+
+		</set>
+
+		where id=#{id}
+	</update>
+	<delete id="deleteStudent" parameterType="model.Student">
+		delete from student where id=#{id}
+	</delete>
+</mapper>
