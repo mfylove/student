@@ -112,7 +112,7 @@ public class StudentController {
 			e.printStackTrace();
 		}
 	
-		//System.out.println(student.getSage());
+		System.out.println(student.getSage());
 		stu.modifyStudent(student);
 		
 		return "student";
